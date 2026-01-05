@@ -42,6 +42,11 @@ public class HealthSystem : MonoBehaviour
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
         Debug.Log($"Dégâts subis : {amount} PV. Vie actuelle : {currentHealth}/{maxHealth}");
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayTakeDamageSound();
+        }
+
         if (IsDead)
         {
             OnDeath?.Invoke();

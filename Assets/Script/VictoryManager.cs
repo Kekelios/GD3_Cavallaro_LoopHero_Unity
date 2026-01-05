@@ -42,6 +42,11 @@ public class VictoryManager : MonoBehaviour
         hasWon = true;
         Debug.Log("Victoire ! Niveau terminé !");
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayVictoryMusic();
+        }
+
         StartCoroutine(VictorySequence());
     }
 

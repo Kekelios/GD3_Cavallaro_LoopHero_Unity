@@ -10,6 +10,14 @@ public class MainMenuManager : MonoBehaviour
     [Header("Scene Settings")]
     [SerializeField] private string gameSceneName = "LoopHeroScene";
 
+    private void Start()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayMenuMusic();
+        }
+    }
+
     public void PlayGame()
     {
         Time.timeScale = 1f;

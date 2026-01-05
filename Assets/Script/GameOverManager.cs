@@ -59,6 +59,11 @@ public class GameOverManager : MonoBehaviour
 
         isGameOver = true;
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayGameOverSound();
+        }
+
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);

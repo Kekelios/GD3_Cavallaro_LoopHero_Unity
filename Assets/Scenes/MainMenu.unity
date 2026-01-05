@@ -1245,6 +1245,58 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1793584164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1793584166}
+  - component: {fileID: 1793584165}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1793584165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793584164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0318a8bedfc2a042bc0a95909297e13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  menuMusic: {fileID: 8300000, guid: dedefa036e94ca2468081b8da16683e3, type: 3}
+  gameMusic: {fileID: 8300000, guid: 01d597f26a3652e4b806b18161bf3109, type: 3}
+  victoryMusic: {fileID: 8300000, guid: ed92896a01a171b45b5b1d311eff37a3, type: 3}
+  musicVolume: 0.5
+  diceRollSound: {fileID: 8300000, guid: efedb0efee0206a438309cd7bcad3955, type: 3}
+  takeDamageSound: {fileID: 8300000, guid: bb82e8fd769364748919b13b3fa34e0b, type: 3}
+  gameOverSound: {fileID: 8300000, guid: a17ee4a1499e74744831c7f2f83c8b09, type: 3}
+  sfxVolume: 0.7
+--- !u!4 &1793584166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793584164}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 117.89021, y: 20.78079, z: -221.07664}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2106622730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,3 +1442,4 @@ SceneRoots:
   - {fileID: 54549252}
   - {fileID: 72335010}
   - {fileID: 1486697283}
+  - {fileID: 1793584166}
