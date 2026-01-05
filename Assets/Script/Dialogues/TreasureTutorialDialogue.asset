@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueData
   lines:
   - characterName: Narrateur
-    text: 
+    text: "Le coffre avec la relique se trouve ici, mais des gobelins semblent ne
+      pas \xEAtre loin, que faites vous ? "
+  hasChoices: 1
+  runtimeChoices: []

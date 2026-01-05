@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: e7932b255288f2c4faa4d68070724787
+  - enabled: 1
+    path: Assets/Scenes/LoopHeroScene.unity
+    guid: 0e1c78a416a92374d8f08381aa752e6e
+  - enabled: 0
     path: Assets/Scenes/NatureMorteScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects:

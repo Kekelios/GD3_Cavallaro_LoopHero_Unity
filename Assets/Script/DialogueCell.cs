@@ -10,6 +10,7 @@ public class DialogueCell : Cell
     [Header("Quest System")]
     [SerializeField] private QuestCondition questCondition;
     [SerializeField] private bool activatesQuest = true;
+    [SerializeField] private bool triggersVictory = false;
 
     [Header("Visual Indicators")]
     [SerializeField] private GameObject questMarker;
@@ -32,6 +33,19 @@ public class DialogueCell : Cell
         if (questCompleteEffect != null)
         {
             questCompleteEffect.gameObject.SetActive(false);
+        }
+
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueEnded += OnDialogueFinished;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (DialogueManager.Instance != null)
+        {
+            DialogueManager.Instance.OnDialogueEnded -= OnDialogueFinished;
         }
     }
 
@@ -77,6 +91,17 @@ public class DialogueCell : Cell
         else
         {
             Debug.LogWarning("Aucun dialogue assigné à cette cellule !");
+        }
+    }
+
+    private void OnDialogueFinished()
+    {
+        if (triggersVictory && questCondition != null && questCondition.isCompleted && hasShownCompleteEffect)
+        {
+            if (VictoryManager.Instance != null)
+            {
+                VictoryManager.Instance.TriggerVictory();
+            }
         }
     }
 
