@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
@@ -8,12 +9,15 @@ public class DialogueManager : MonoBehaviour
     public event Action<DialogueLine> OnDialogueLineChanged;
     public event Action OnDialogueStarted;
     public event Action OnDialogueEnded;
+    public event Action<List<DialogueChoice>> OnChoicesAvailable;
 
     private DialogueData currentDialogue;
     private int currentLineIndex = 0;
     private bool isDialogueActive = false;
+    private bool waitingForChoice = false;
 
     public bool IsDialogueActive => isDialogueActive;
+    public bool IsWaitingForChoice => waitingForChoice;
 
     private void Awake()
     {
@@ -38,6 +42,7 @@ public class DialogueManager : MonoBehaviour
         currentDialogue = dialogue;
         currentLineIndex = 0;
         isDialogueActive = true;
+        waitingForChoice = false;
 
         OnDialogueStarted?.Invoke();
         DisplayCurrentLine();
@@ -45,19 +50,42 @@ public class DialogueManager : MonoBehaviour
 
     public void ShowNextLine()
     {
-        if (!isDialogueActive)
+        if (!isDialogueActive || waitingForChoice)
             return;
 
         currentLineIndex++;
 
         if (currentLineIndex >= currentDialogue.lines.Count)
         {
-            EndDialogue();
+            if (currentDialogue.hasChoices && currentDialogue.runtimeChoices.Count > 0)
+            {
+                ShowChoices();
+            }
+            else
+            {
+                EndDialogue();
+            }
         }
         else
         {
             DisplayCurrentLine();
         }
+    }
+
+    private void ShowChoices()
+    {
+        waitingForChoice = true;
+        OnChoicesAvailable?.Invoke(currentDialogue.runtimeChoices);
+    }
+
+    public void SelectChoice(int choiceIndex)
+    {
+        if (!waitingForChoice || choiceIndex < 0 || choiceIndex >= currentDialogue.runtimeChoices.Count)
+            return;
+
+        waitingForChoice = false;
+        currentDialogue.runtimeChoices[choiceIndex].onChoiceSelected?.Invoke();
+        EndDialogue();
     }
 
     private void DisplayCurrentLine()
@@ -73,6 +101,7 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = false;
         currentDialogue = null;
         currentLineIndex = 0;
+        waitingForChoice = false;
 
         OnDialogueEnded?.Invoke();
     }
