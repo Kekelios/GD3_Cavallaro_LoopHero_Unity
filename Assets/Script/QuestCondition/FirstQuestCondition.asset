@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d5a97a011a1c52419f2184922e08950, type: 3}
-  m_Name: PlayerData
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerData
-  _cellNumber: 1
+  m_Script: {fileID: 11500000, guid: b4f9520e079ea6a41a3cff0e75ccc008, type: 3}
+  m_Name: FirstQuestCondition
+  m_EditorClassIdentifier: Assembly-CSharp::QuestCondition
+  isActive: 1
+  isCompleted: 1
