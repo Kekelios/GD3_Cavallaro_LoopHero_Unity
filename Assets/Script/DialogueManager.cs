@@ -96,6 +96,15 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    public DialogueLine GetCurrentLine()
+    {
+        if (currentDialogue != null && currentLineIndex < currentDialogue.lines.Count)
+        {
+            return currentDialogue.lines[currentLineIndex];
+        }
+        return null;
+    }
+
     private void EndDialogue()
     {
         isDialogueActive = false;

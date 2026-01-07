@@ -17,4 +17,6 @@ MonoBehaviour:
     text: "Le coffre avec la relique se trouve ici, mais des gobelins semblent ne
       pas \xEAtre loin, que faites vous ? "
   hasChoices: 1
-  runtimeChoices: []
+  runtimeChoices:
+  - choiceText: "Ouvrir d\xE9licatement le coffre"
+  - choiceText: Forcer le coffre rapidement

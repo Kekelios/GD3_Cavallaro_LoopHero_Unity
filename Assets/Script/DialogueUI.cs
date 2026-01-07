@@ -16,10 +16,15 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] private Button choiceButtonPrefab;
     [SerializeField] private Transform choicesContainer;
 
+    private TextMeshProUGUI choiceCharacterNameText;
+    private TextMeshProUGUI choiceDialogueText;
     private List<Button> activeChoiceButtons = new List<Button>();
+    private DialogueLine lastDisplayedLine;
 
     private void Start()
     {
+        FindChoicePanelTexts();
+
         DialogueManager.Instance.OnDialogueStarted += ShowDialoguePanel;
         DialogueManager.Instance.OnDialogueEnded += HideDialoguePanel;
         DialogueManager.Instance.OnDialogueLineChanged += UpdateDialogueUI;
@@ -27,8 +32,36 @@ public class DialogueUI : MonoBehaviour
 
         nextButton.onClick.AddListener(OnNextButtonClicked);
 
+        characterNameText.text = "";
+        dialogueText.text = "";
+
+        if (choiceCharacterNameText != null)
+            choiceCharacterNameText.text = "";
+        if (choiceDialogueText != null)
+            choiceDialogueText.text = "";
+
         HideDialoguePanel();
         HideChoicesPanel();
+    }
+
+    private void FindChoicePanelTexts()
+    {
+        if (choicesPanel != null)
+        {
+            TextMeshProUGUI[] texts = choicesPanel.GetComponentsInChildren<TextMeshProUGUI>(true);
+
+            foreach (TextMeshProUGUI text in texts)
+            {
+                if (text.gameObject.name == "CharacterNameText")
+                {
+                    choiceCharacterNameText = text;
+                }
+                else if (text.gameObject.name == "DialogueText")
+                {
+                    choiceDialogueText = text;
+                }
+            }
+        }
     }
 
     private void OnDestroy()
@@ -57,6 +90,7 @@ public class DialogueUI : MonoBehaviour
 
     private void UpdateDialogueUI(DialogueLine line)
     {
+        lastDisplayedLine = line;
         characterNameText.text = line.characterName;
         dialogueText.text = line.text;
         nextButton.gameObject.SetActive(true);
@@ -65,8 +99,14 @@ public class DialogueUI : MonoBehaviour
 
     private void ShowChoices(List<DialogueChoice> choices)
     {
-        nextButton.gameObject.SetActive(false);
+        dialoguePanel.SetActive(false);
         choicesPanel.SetActive(true);
+
+        if (choiceCharacterNameText != null && lastDisplayedLine != null)
+        {
+            choiceCharacterNameText.text = lastDisplayedLine.characterName;
+            choiceDialogueText.text = lastDisplayedLine.text;
+        }
 
         ClearChoiceButtons();
 
@@ -76,6 +116,7 @@ public class DialogueUI : MonoBehaviour
             Button choiceButton = Instantiate(choiceButtonPrefab, choicesContainer);
             choiceButton.GetComponentInChildren<TextMeshProUGUI>().text = choices[i].choiceText;
             choiceButton.onClick.AddListener(() => OnChoiceSelected(choiceIndex));
+            choiceButton.gameObject.SetActive(true);
             activeChoiceButtons.Add(choiceButton);
         }
     }
@@ -90,7 +131,10 @@ public class DialogueUI : MonoBehaviour
     {
         foreach (Button button in activeChoiceButtons)
         {
-            Destroy(button.gameObject);
+            if (button != null)
+            {
+                Destroy(button.gameObject);
+            }
         }
         activeChoiceButtons.Clear();
     }
@@ -98,6 +142,7 @@ public class DialogueUI : MonoBehaviour
     private void OnChoiceSelected(int choiceIndex)
     {
         DialogueManager.Instance.SelectChoice(choiceIndex);
+        HideChoicesPanel();
     }
 
     private void OnNextButtonClicked()

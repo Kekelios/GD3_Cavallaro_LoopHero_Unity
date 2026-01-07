@@ -473,10 +473,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1897949191}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 850, y: 0}
-  m_SizeDelta: {x: -1700, y: 0}
+  m_AnchoredPosition: {x: -200, y: 0}
+  m_SizeDelta: {x: 300, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &141966217
 MonoBehaviour:
@@ -497,10 +497,10 @@ MonoBehaviour:
     m_Bottom: 0
   m_ChildAlignment: 4
   m_Spacing: 15
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -2328,8 +2328,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -120, y: -35}
-  m_SizeDelta: {x: -260, y: -70}
+  m_AnchoredPosition: {x: -195, y: -35}
+  m_SizeDelta: {x: -410, y: -70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &769718421
 MonoBehaviour:
@@ -3160,6 +3160,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
   maxHealth: 100
+--- !u!4 &985458745 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 371613951059301867, guid: 9093fb287cf401348b450629a5f86031, type: 3}
+  m_PrefabInstance: {fileID: 964083288}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1006115361
 GameObject:
   m_ObjectHideFlags: 0
@@ -3549,13 +3554,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Texte du dialogue ici... Texte du dialogue ici... Texte du dialogue ici...
-    Texte du dialogue ici... Texte du dialogue ici... Texte du dialogue ici... Texte
-    du dialogue ici... Texte du dialogue ici... Texte du dialogue ici... Texte du
-    dialogue ici... Texte du dialogue ici... Texte du dialogue ici... Texte du dialogue
-    ici... Texte du dialogue ici... Texte du dialogue ici... Texte du dialogue ici...
-    Texte du dialogue ici... Texte du dialogue ici... Texte du dialogue ici... Texte
-    du dialogue ici... '
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3787,7 +3786,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1219747751
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19969,6 +19968,7 @@ GameObject:
   - component: {fileID: 1861341399}
   - component: {fileID: 1861341398}
   - component: {fileID: 1861341401}
+  - component: {fileID: 1861341402}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -20094,6 +20094,29 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &1861341402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861341397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab9f9a4d258757c4e9a8bda3303b1027, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraController
+  pawnTarget: {fileID: 985458745}
+  targetOffset: {x: 0, y: 1, z: 0}
+  followSpeed: 5
+  smoothFollow: 1
+  rotationSpeed: 100
+  minVerticalAngle: 10
+  maxVerticalAngle: 80
+  zoomSpeed: 2
+  minZoom: 5
+  maxZoom: 20
+  defaultZoom: 10
 --- !u!1 &1897949190
 GameObject:
   m_ObjectHideFlags: 0
