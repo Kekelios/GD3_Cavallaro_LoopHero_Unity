@@ -1118,8 +1118,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 8c48ce474a92dac44a5407f3594f5799, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1274,8 +1274,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0318a8bedfc2a042bc0a95909297e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  menuMusic: {fileID: 8300000, guid: dedefa036e94ca2468081b8da16683e3, type: 3}
-  gameMusic: {fileID: 8300000, guid: 01d597f26a3652e4b806b18161bf3109, type: 3}
+  menuMusic: {fileID: 8300000, guid: 8027c70939fe4824d93ac01770fac60d, type: 3}
+  gameMusic: {fileID: 8300000, guid: 8027c70939fe4824d93ac01770fac60d, type: 3}
   victoryMusic: {fileID: 8300000, guid: ed92896a01a171b45b5b1d311eff37a3, type: 3}
   musicVolume: 0.5
   diceRollSound: {fileID: 8300000, guid: efedb0efee0206a438309cd7bcad3955, type: 3}
@@ -1354,7 +1354,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Loop RPG hero
+  m_text: Loop Desert hero
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}

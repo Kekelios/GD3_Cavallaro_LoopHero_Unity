@@ -18,26 +18,38 @@ public class VictoryTextAnimator : MonoBehaviour
     private void Awake()
     {
         textComponent = GetComponent<TextMeshProUGUI>();
+
+        if (textComponent == null)
+        {
+            Debug.LogError("VictoryTextAnimator: Aucun TextMeshProUGUI trouvé !");
+            enabled = false;
+            return;
+        }
+
         originalScale = transform.localScale;
         transform.localScale = Vector3.zero;
     }
 
     private void OnEnable()
     {
+        if (textComponent == null) return;
+
         animationTimer = 0f;
         isAnimating = true;
         transform.localScale = Vector3.zero;
 
-        if (textComponent != null)
-        {
-            Color color = textComponent.color;
-            color.a = 0f;
-            textComponent.color = color;
-        }
+        Color color = textComponent.color;
+        color.a = 0f;
+        textComponent.color = color;
     }
 
     private void Update()
     {
+        if (textComponent == null || !textComponent.isActiveAndEnabled)
+        {
+            return;
+        }
+
         if (isAnimating)
         {
             animationTimer += Time.unscaledDeltaTime;
@@ -46,12 +58,9 @@ public class VictoryTextAnimator : MonoBehaviour
 
             transform.localScale = originalScale * curveValue * targetScale;
 
-            if (textComponent != null)
-            {
-                Color color = textComponent.color;
-                color.a = progress;
-                textComponent.color = color;
-            }
+            Color color = textComponent.color;
+            color.a = progress;
+            textComponent.color = color;
 
             if (progress >= 1f)
             {
