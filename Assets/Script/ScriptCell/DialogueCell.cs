@@ -67,9 +67,17 @@ public class DialogueCell : Cell
 
     public override void Activate(Pawn CurrentPawn)
     {
-        if (questCondition != null && questCondition.isCompleted && !hasShownCompleteEffect)
+        bool questCompleted = (questCondition != null && questCondition.isCompleted);
+
+        //  Si la quête est déjà complétée au moment où on démarre le dialogue, on force la victoire
+        if (questCompleted)
         {
-            ShowQuestCompleteEffect();
+            triggersVictory = true;
+
+            if (!hasShownCompleteEffect)
+            {
+                ShowQuestCompleteEffect();
+            }
         }
 
         DialogueData dialogueToPlay = GetDialogueToPlay();
@@ -88,15 +96,11 @@ public class DialogueCell : Cell
                 }
             }
         }
-        else
-        {
-            Debug.LogWarning("Aucun dialogue assigné à cette cellule !");
-        }
     }
 
     private void OnDialogueFinished()
     {
-        if (triggersVictory && questCondition != null && questCondition.isCompleted && hasShownCompleteEffect)
+        if (triggersVictory && questCondition != null && questCondition.isCompleted)
         {
             if (VictoryManager.Instance != null)
             {
@@ -107,15 +111,11 @@ public class DialogueCell : Cell
 
     private DialogueData GetDialogueToPlay()
     {
-        if (questCondition != null && questCondition.isCompleted && afterQuestDialogue != null)
-        {
+        if (questCondition != null && questCondition.isCompleted)
             return afterQuestDialogue;
-        }
 
-        if (hasBeenVisited && alreadyVisitedDialogue != null)
-        {
+        if (hasBeenVisited)
             return alreadyVisitedDialogue;
-        }
 
         return firstVisitDialogue;
     }

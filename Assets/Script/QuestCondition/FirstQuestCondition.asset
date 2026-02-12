@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: FirstQuestCondition
   m_EditorClassIdentifier: Assembly-CSharp::QuestCondition
   isActive: 1
-  isCompleted: 1
+  isCompleted: 0

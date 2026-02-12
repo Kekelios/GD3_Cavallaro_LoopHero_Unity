@@ -16,28 +16,28 @@ public class DialogueManager : MonoBehaviour
     private bool isDialogueActive = false;
     private bool waitingForChoice = false;
 
+    private object dialogueInstigator;
+
     public bool IsDialogueActive => isDialogueActive;
     public bool IsWaitingForChoice => waitingForChoice;
 
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
-    public void StartDialogue(DialogueData dialogue)
+    public void StartDialogue(DialogueData dialogue, object instigator = null)
     {
         if (dialogue == null || dialogue.lines.Count == 0)
         {
-            Debug.LogError("Le dialogue est vide ou null !");
+            Debug.LogError("Dialogue vide ou null !");
             return;
         }
+
+        dialogueInstigator = instigator;
 
         currentDialogue = dialogue;
         currentLineIndex = 0;
@@ -84,8 +84,38 @@ public class DialogueManager : MonoBehaviour
             return;
 
         waitingForChoice = false;
-        currentDialogue.runtimeChoices[choiceIndex].onChoiceSelected?.Invoke();
+
+        DialogueChoice choice = currentDialogue.runtimeChoices[choiceIndex];
+
+        //  Logique data-driven
+        HandleChoiceOutcome(choice.outcome);
+
+        // Notifier l’instigator si besoin
+        if (dialogueInstigator is TreasureCell treasureCell)
+        {
+            treasureCell.ResolveChoice(choiceIndex);
+        }
+
         EndDialogue();
+    }
+
+    private void HandleChoiceOutcome(ChoiceOutcome outcome)
+    {
+        if (outcome == null)
+            return;
+
+        switch (outcome.outcomeType)
+        {
+            case ChoiceOutcomeType.None:
+                break;
+
+            case ChoiceOutcomeType.StartDialogue:
+                if (outcome.nextDialogue != null)
+                {
+                    StartDialogue(outcome.nextDialogue, dialogueInstigator);
+                }
+                break;
+        }
     }
 
     private void DisplayCurrentLine()
@@ -99,9 +129,8 @@ public class DialogueManager : MonoBehaviour
     public DialogueLine GetCurrentLine()
     {
         if (currentDialogue != null && currentLineIndex < currentDialogue.lines.Count)
-        {
             return currentDialogue.lines[currentLineIndex];
-        }
+
         return null;
     }
 

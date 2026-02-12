@@ -21197,7 +21197,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 3733e95c492ace446b7d4815ce032b7c, type: 2}
     - target: {fileID: 8736158859195466720, guid: 9a58fb008fbf88141bdfa2280ff51a44, type: 3}
       propertyPath: triggersVictory
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8736158859195466720, guid: 9a58fb008fbf88141bdfa2280ff51a44, type: 3}
       propertyPath: afterQuestDialogue
