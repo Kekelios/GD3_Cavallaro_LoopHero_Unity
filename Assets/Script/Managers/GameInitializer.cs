@@ -22,6 +22,13 @@ public class GameInitializer : MonoBehaviour
             }
         }
 
+        // Restaure la vie sauvegardée depuis le mini-jeu
+        HealthSystem healthSystem = FindFirstObjectByType<HealthSystem>();
+        if (healthSystem != null && playerData.savedHealth > 0)
+        {
+            healthSystem.SetCurrentHealth(playerData.savedHealth);
+        }
+
         Debug.Log("Toutes les quêtes ont été réinitialisées.");
     }
 }
