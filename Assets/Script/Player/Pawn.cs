@@ -7,6 +7,9 @@ public class Pawn : MonoBehaviour
 
     private void Start()
     {
+        // _board n'existe pas dans la MiniGameScene, on ne fait rien
+        if (_board == null) return;
+
         MoveToCell();
     }
 
