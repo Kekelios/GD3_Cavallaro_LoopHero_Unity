@@ -8,27 +8,39 @@ public class GameInitializer : MonoBehaviour
 
     private void Awake()
     {
-        if (playerData != null)
+        if (playerData == null) return;
+
+        if (playerData.isReturningFromMiniGame)
         {
+            // Retour du mini-jeu : on conserve tout, on restaure juste la vie
+            playerData.isReturningFromMiniGame = false;
+            RestoreHealth();
+            Debug.Log($"Retour du mini-jeu. Clés : {playerData.keyCount}/2, Case : {playerData._cellNumber}");
+        }
+        else
+        {
+            // Vrai démarrage : reset complet
             playerData._cellNumber = 0;
-            Debug.Log("PlayerData réinitialisé : position = 0");
-        }
+            playerData.keyCount = 0;
+            playerData.savedHealth = 0;
 
-        foreach (var quest in questConditions)
-        {
-            if (quest != null)
+            foreach (var quest in questConditions)
             {
-                quest.Reset();
+                if (quest != null)
+                    quest.Reset();
             }
-        }
 
-        // Restaure la vie sauvegardée depuis le mini-jeu
+            Debug.Log("Nouvelle partie : données réinitialisées.");
+        }
+    }
+
+    /// <summary>Applique la vie sauvegardée au HealthSystem du joueur.</summary>
+    private void RestoreHealth()
+    {
+        if (playerData.savedHealth <= 0) return;
+
         HealthSystem healthSystem = FindFirstObjectByType<HealthSystem>();
-        if (healthSystem != null && playerData.savedHealth > 0)
-        {
+        if (healthSystem != null)
             healthSystem.SetCurrentHealth(playerData.savedHealth);
-        }
-
-        Debug.Log("Toutes les quêtes ont été réinitialisées.");
     }
 }

@@ -11,6 +11,9 @@ public class TreasureCell : Cell
     [SerializeField] private string choiceBText = "Forcer le coffre rapidement";
     [SerializeField] private int choiceBDamage = 50;
 
+    [Header("Keys")]
+    [SerializeField] private PlayerData playerData;
+
     [Header("Visual")]
     [SerializeField] private GameObject treasureVisual;
 
@@ -32,7 +35,6 @@ public class TreasureCell : Cell
         if (treasureVisual == null || questToComplete == null)
             return;
 
-        // Visible uniquement si la quête est active, pas complétée, et pas déjà ramassé
         bool shouldBeVisible = questToComplete.isActive && !questToComplete.isCompleted && !hasBeenCollected;
         treasureVisual.SetActive(shouldBeVisible);
     }
@@ -70,7 +72,6 @@ public class TreasureCell : Cell
                 outcome = new ChoiceOutcome { outcomeType = ChoiceOutcomeType.None }
             });
 
-            //  IMPORTANT : passer l’instigator pour que le DialogueManager puisse rappeler ResolveChoice
             DialogueManager.Instance.StartDialogue(treasureDialogue, this);
         }
         else
@@ -93,9 +94,14 @@ public class TreasureCell : Cell
         }
     }
 
+    /// <summary>Collecte le trésor, incrémente le compteur de clés et applique les dégâts si besoin.</summary>
     private void CollectTreasure(int damageAmount)
     {
         hasBeenCollected = true;
+
+        // Donne la première clé
+        if (playerData != null)
+            playerData.keyCount++;
 
         if (questToComplete != null && !questToComplete.isCompleted)
             questToComplete.Complete();
@@ -110,6 +116,6 @@ public class TreasureCell : Cell
                 healthSystem.TakeDamage(damageAmount);
         }
 
-        Debug.Log("Trésor collecté !");
+        Debug.Log($"Trésor collecté ! Clés : {playerData.keyCount}/2");
     }
 }

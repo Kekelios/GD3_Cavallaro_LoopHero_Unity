@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 public class DialogueCell : Cell
 {
@@ -11,6 +11,9 @@ public class DialogueCell : Cell
     [SerializeField] private QuestCondition questCondition;
     [SerializeField] private bool activatesQuest = true;
     [SerializeField] private bool triggersVictory = false;
+
+    [Header("Keys")]
+    [SerializeField] private PlayerData playerData;
 
     [Header("Visual Indicators")]
     [SerializeField] private GameObject questMarker;
@@ -31,22 +34,16 @@ public class DialogueCell : Cell
         }
 
         if (questCompleteEffect != null)
-        {
             questCompleteEffect.gameObject.SetActive(false);
-        }
 
         if (DialogueManager.Instance != null)
-        {
             DialogueManager.Instance.OnDialogueEnded += OnDialogueFinished;
-        }
     }
 
     private void OnDestroy()
     {
         if (DialogueManager.Instance != null)
-        {
             DialogueManager.Instance.OnDialogueEnded -= OnDialogueFinished;
-        }
     }
 
     private void Update()
@@ -67,17 +64,16 @@ public class DialogueCell : Cell
 
     public override void Activate(Pawn CurrentPawn)
     {
-        bool questCompleted = (questCondition != null && questCondition.isCompleted);
+        // La victoire n√©cessite la qu√™te compl√©t√©e ET les 2 cl√©s
+        bool allConditionsMet = (questCondition != null && questCondition.isCompleted)
+                                && (playerData != null && playerData.keyCount >= 2);
 
-        //  Si la quÍte est dÈj‡ complÈtÈe au moment o˘ on dÈmarre le dialogue, on force la victoire
-        if (questCompleted)
+        if (allConditionsMet)
         {
             triggersVictory = true;
 
             if (!hasShownCompleteEffect)
-            {
                 ShowQuestCompleteEffect();
-            }
         }
 
         DialogueData dialogueToPlay = GetDialogueToPlay();
@@ -91,27 +87,32 @@ public class DialogueCell : Cell
                 hasBeenVisited = true;
 
                 if (activatesQuest && questCondition != null && !questCondition.isActive)
-                {
                     questCondition.Activate();
-                }
             }
         }
     }
 
     private void OnDialogueFinished()
     {
-        if (triggersVictory && questCondition != null && questCondition.isCompleted)
+        // D√©clenche la victoire uniquement si toutes les conditions sont remplies
+        bool allConditionsMet = triggersVictory
+                                && (questCondition != null && questCondition.isCompleted)
+                                && (playerData != null && playerData.keyCount >= 2);
+
+        if (allConditionsMet)
         {
             if (VictoryManager.Instance != null)
-            {
                 VictoryManager.Instance.TriggerVictory();
-            }
         }
     }
 
+    /// <summary>
+    /// Retourne le dialogue selon l'√©tat des cl√©s.
+    /// Le dialogue final n√©cessite les 2 cl√©s (TreasureCell + MiniGameCell).
+    /// </summary>
     private DialogueData GetDialogueToPlay()
     {
-        if (questCondition != null && questCondition.isCompleted)
+        if (playerData != null && playerData.keyCount >= 2)
             return afterQuestDialogue;
 
         if (hasBeenVisited)
@@ -125,9 +126,7 @@ public class DialogueCell : Cell
         hasShownCompleteEffect = true;
 
         if (questMarker != null)
-        {
             questMarker.SetActive(false);
-        }
 
         if (questCompleteEffect != null)
         {
@@ -135,6 +134,6 @@ public class DialogueCell : Cell
             questCompleteEffect.Play();
         }
 
-        Debug.Log("QuÍte complÈtÈe ! Effet visuel activÈ.");
+        Debug.Log("Qu√™te compl√©t√©e ! Effet visuel activ√©.");
     }
 }
