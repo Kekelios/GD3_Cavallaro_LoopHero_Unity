@@ -19,8 +19,9 @@ public class MiniGamesManager : MonoBehaviour
     public void OnKeyCollected()
     {
         playerData.keyCount++;
-        playerData.isReturningFromMiniGame = true; // ← protège le reset
-        Debug.Log($"Clé récupérée ! Total : {playerData.keyCount}/2");
+        playerData.isReturningFromMiniGame = true;
+        // savedHealth est déjà correct : il a été décrémenté par OnPlayerCaught() à chaque capture
+        Debug.Log($"Clé récupérée ! Total : {playerData.keyCount}/2 – Vie conservée : {playerData.savedHealth}");
         SceneManager.LoadScene(MainSceneName);
     }
 
@@ -28,6 +29,7 @@ public class MiniGamesManager : MonoBehaviour
     public void OnPlayerCaught()
     {
         playerData.savedHealth = Mathf.Max(0, playerData.savedHealth - CatchDamage);
+        Debug.Log($"Attrapé ! Nouvelle vie : {playerData.savedHealth}");
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

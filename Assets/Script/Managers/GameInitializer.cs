@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 public class GameInitializer : MonoBehaviour
 {
@@ -12,17 +12,20 @@ public class GameInitializer : MonoBehaviour
 
         if (playerData.isReturningFromMiniGame)
         {
-            // Retour du mini-jeu : on conserve tout, on restaure juste la vie
             playerData.isReturningFromMiniGame = false;
-            RestoreHealth();
-            Debug.Log($"Retour du mini-jeu. ClÈs : {playerData.keyCount}/2, Case : {playerData._cellNumber}");
+
+            Debug.Log($"Retour du mini-jeu. Cl√©s : {playerData.keyCount}/2, Vie √† restaurer : {playerData.savedHealth}");
         }
         else
         {
-            // Vrai dÈmarrage : reset complet
             playerData._cellNumber = 0;
             playerData.keyCount = 0;
-            playerData.savedHealth = 0;
+
+            // ‚ö†Ô∏è IMPORTANT : on met la vie par d√©faut
+            if (playerData.savedHealth <= 0)
+            {
+                playerData.savedHealth = 100;
+            }
 
             foreach (var quest in questConditions)
             {
@@ -30,17 +33,25 @@ public class GameInitializer : MonoBehaviour
                     quest.Reset();
             }
 
-            Debug.Log("Nouvelle partie : donnÈes rÈinitialisÈes.");
+            Debug.Log("Nouvelle partie : donn√©es r√©initialis√©es.");
         }
     }
 
-    /// <summary>Applique la vie sauvegardÈe au HealthSystem du joueur.</summary>
+    private void Start()
+    {
+        RestoreHealth();
+    }
+
     private void RestoreHealth()
     {
-        if (playerData.savedHealth <= 0) return;
+        if (playerData == null) return;
 
         HealthSystem healthSystem = FindFirstObjectByType<HealthSystem>();
+
         if (healthSystem != null)
+        {
             healthSystem.SetCurrentHealth(playerData.savedHealth);
+            Debug.Log($"Vie restaur√©e : {playerData.savedHealth}");
+        }
     }
 }
