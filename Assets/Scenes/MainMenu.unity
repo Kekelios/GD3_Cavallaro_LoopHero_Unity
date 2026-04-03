@@ -1276,11 +1276,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
   menuMusic: {fileID: 8300000, guid: 8027c70939fe4824d93ac01770fac60d, type: 3}
   gameMusic: {fileID: 8300000, guid: 8027c70939fe4824d93ac01770fac60d, type: 3}
+  miniGameMusic: {fileID: 8300000, guid: d5714006ee7dac946b751d379385229e, type: 3}
   victoryMusic: {fileID: 8300000, guid: ed92896a01a171b45b5b1d311eff37a3, type: 3}
-  musicVolume: 0.5
+  musicVolume: 0.4
   diceRollSound: {fileID: 8300000, guid: efedb0efee0206a438309cd7bcad3955, type: 3}
   takeDamageSound: {fileID: 8300000, guid: bb82e8fd769364748919b13b3fa34e0b, type: 3}
   gameOverSound: {fileID: 8300000, guid: a17ee4a1499e74744831c7f2f83c8b09, type: 3}
+  footstepSoundA: {fileID: 8300000, guid: a704afa031fcfe04285b4b1d194f2d98, type: 3}
+  footstepSoundB: {fileID: 8300000, guid: ae12dd51b2fc9b1499cad66a1619ef9a, type: 3}
+  chestOpenSound: {fileID: 8300000, guid: 36326462bf0d3c84187ba7031be9e041, type: 3}
+  victorySFX: {fileID: 8300000, guid: fdaa9da78c52e02498d12cefba2f466c, type: 3}
   sfxVolume: 0.7
 --- !u!4 &1793584166
 Transform:

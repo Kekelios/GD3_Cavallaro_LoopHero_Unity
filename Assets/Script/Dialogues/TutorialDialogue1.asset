@@ -19,5 +19,7 @@ MonoBehaviour:
   - characterName: "H\xE9ros"
     text: Oui, savez vous comment je dois m'y prendre ?
   - characterName: Alyrish
-    text: "Bien sur, mais avant tu dois effectuer une t\xE2che pour moi. Vainc les
-      monstres de la Grotte des Sombrehistoires et reviens me voir."
+    text: "Bien sur, mais avant tu dois effectuer une t\xE2che pour moi. R\xE9cup\xE8re
+      moi les 2 clefs des sables pour me montrer que tu es dignes d'aller au sanctuaire."
+  hasChoices: 0
+  runtimeChoices: []

@@ -1,17 +1,16 @@
-using NUnit.Framework;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Board : MonoBehaviour
 {
     [SerializeField] private Cell[] _cells;
-    //private List<Cell> _cellsList;
 
-    public Cell GetCellByNumber(int number) //"Cell" c'est l'output, GetCellByNumber c'est la fonction, "Int Number" est l'intput
+    /// <summary>Retourne la cellule correspondant à l'index donné.</summary>
+    public Cell GetCellByNumber(int number)
     {
         return _cells[number];
     }
 
+    /// <summary>Retourne le prochain index valide en bouclant sur le tableau.</summary>
     public int GetNextCellToMove(int cellNumber)
     {
         return cellNumber % _cells.Length;

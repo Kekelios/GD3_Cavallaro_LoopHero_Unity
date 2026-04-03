@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
@@ -7,13 +7,22 @@ public class AudioManager : MonoBehaviour
     [Header("Music")]
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private AudioClip gameMusic;
+    [SerializeField] private AudioClip miniGameMusic;
     [SerializeField] private AudioClip victoryMusic;
     [SerializeField] private float musicVolume = 0.5f;
 
-    [Header("Sound Effects")]
+    [Header("Sound Effects – Player")]
     [SerializeField] private AudioClip diceRollSound;
     [SerializeField] private AudioClip takeDamageSound;
     [SerializeField] private AudioClip gameOverSound;
+    [SerializeField] private AudioClip footstepSoundA;
+    [SerializeField] private AudioClip footstepSoundB;
+
+
+    [Header("Sound Effects – Mini-Game")]
+    [SerializeField] private AudioClip chestOpenSound;
+    [SerializeField] private AudioClip victorySFX;
+
     [SerializeField] private float sfxVolume = 0.7f;
 
     private AudioSource musicSource;
@@ -46,65 +55,63 @@ public class AudioManager : MonoBehaviour
         sfxSource.playOnAwake = false;
     }
 
-    public void PlayMenuMusic()
-    {
-        if (menuMusic != null)
-        {
-            PlayMusic(menuMusic);
-        }
-    }
+    // ── Music ────────────────────────────────────────────────────────
 
-    public void PlayGameMusic()
-    {
-        if (gameMusic != null)
-        {
-            PlayMusic(gameMusic);
-        }
-    }
+    /// <summary>Musique de la LoopHeroScene.</summary>
+    public void PlayGameMusic() => PlayMusic(gameMusic);
 
-    public void PlayVictoryMusic()
-    {
-        if (victoryMusic != null)
-        {
-            PlayMusic(victoryMusic);
-        }
-    }
+    /// <summary>Musique exclusive au mini-jeu.</summary>
+    public void PlayMiniGameMusic() => PlayMusic(miniGameMusic);
+
+    public void PlayMenuMusic() => PlayMusic(menuMusic);
+
+    public void PlayVictoryMusic() => PlayMusic(victoryMusic);
+
+    public void StopMusic() => musicSource.Stop();
 
     private void PlayMusic(AudioClip clip)
     {
-        if (musicSource.clip == clip && musicSource.isPlaying)
-            return;
+        if (clip == null) return;
+        if (musicSource.clip == clip && musicSource.isPlaying) return;
 
         musicSource.clip = clip;
         musicSource.Play();
     }
 
-    public void StopMusic()
+    // ── SFX – Player ─────────────────────────────────────────────────
+
+    public void PlayDiceRollSound() => PlaySFX(diceRollSound);
+
+    public void PlayTakeDamageSound() => PlaySFX(takeDamageSound);
+
+    public void PlayGameOverSound() => PlaySFX(gameOverSound);
+
+    private bool _footstepToggle = false;
+
+    /// <summary>Alterne entre footstepSoundA et footstepSoundB à chaque appel.</summary>
+    public void PlayFootstepSound()
     {
-        musicSource.Stop();
+        AudioClip clip = _footstepToggle ? footstepSoundB : footstepSoundA;
+        _footstepToggle = !_footstepToggle;
+        PlaySFX(clip);
     }
 
-    public void PlayDiceRollSound()
-    {
-        PlaySFX(diceRollSound);
-    }
 
-    public void PlayTakeDamageSound()
-    {
-        PlaySFX(takeDamageSound);
-    }
+    // ── SFX – Mini-Game ───────────────────────────────────────────────
 
-    public void PlayGameOverSound()
-    {
-        PlaySFX(gameOverSound);
-    }
+    /// <summary>Son du coffre qui s'ouvre.</summary>
+    public void PlayChestOpenSound() => PlaySFX(chestOpenSound);
 
+    /// <summary>Fanfare de victoire quand le coffre est récupéré.</summary>
+    public void PlayVictorySFX() => PlaySFX(victorySFX);
+
+    // ── Generic ───────────────────────────────────────────────────────
+
+    /// <summary>Joue un clip SFX quelconque via le source global.</summary>
     public void PlaySFX(AudioClip clip)
     {
         if (clip != null)
-        {
-            sfxSource.PlayOneShot(clip);
-        }
+            sfxSource.PlayOneShot(clip, sfxVolume);
     }
 
     public void SetMusicVolume(float volume)

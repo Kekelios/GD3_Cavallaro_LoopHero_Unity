@@ -13,20 +13,33 @@ public class MiniGamePlayerController : MonoBehaviour
     [SerializeField] private float gravity = -9.81f;
 
     [Header("Caméra")]
-    [SerializeField] private Transform cameraTransform; // Glisse la Main Camera ici
+    [SerializeField] private Transform cameraTransform;
+
+    [Header("Visuel")]
+    [SerializeField] private Transform visualRoot;
+
+    [Header("Audio")]
+    [SerializeField] private float footstepInterval = 0.4f;
 
     private CharacterController characterController;
+    private Animator animator;
     private Vector2 moveInput;
     private float verticalVelocity;
+    private float footstepTimer = 0f;
+
+    private int _speedParam;
+    private int _victoryParam;
 
     private void Awake()
     {
+        _speedParam = Animator.StringToHash("Speed");
+        _victoryParam = Animator.StringToHash("Trigger");
+
         characterController = GetComponent<CharacterController>();
+        animator = GetComponentInChildren<Animator>();
     }
 
-    /// <summary>
-    /// Appelé automatiquement par le New Input System (action "Move").
-    /// </summary>
+    /// <summary>Appelé automatiquement par le New Input System (action "Move").</summary>
     public void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
@@ -41,22 +54,39 @@ public class MiniGamePlayerController : MonoBehaviour
     /// <summary>Calcule et applique le déplacement relatif à la caméra.</summary>
     private void Move()
     {
-        if (moveInput.sqrMagnitude < 0.01f) return;
+        if (moveInput.sqrMagnitude >= 0.01f)
+        {
+            Vector3 camForward = cameraTransform.forward;
+            Vector3 camRight = cameraTransform.right;
+            camForward.y = 0f;
+            camRight.y = 0f;
+            camForward.Normalize();
+            camRight.Normalize();
 
-        // Direction relative à l'orientation de la caméra (ignore l'axe Y de la caméra)
-        Vector3 camForward = cameraTransform.forward;
-        Vector3 camRight = cameraTransform.right;
-        camForward.y = 0f;
-        camRight.y = 0f;
-        camForward.Normalize();
-        camRight.Normalize();
+            Vector3 moveDirection = camForward * moveInput.y + camRight * moveInput.x;
 
-        Vector3 moveDirection = (camForward * moveInput.y + camRight * moveInput.x);
+            characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
 
-        // Le joueur se tourne dans la direction du mouvement
-        transform.forward = Vector3.Slerp(transform.forward, moveDirection, Time.deltaTime * 10f);
+            if (visualRoot != null)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                visualRoot.rotation = Quaternion.Slerp(visualRoot.rotation, targetRotation, Time.deltaTime * 10f);
+            }
 
-        characterController.Move(moveDirection * moveSpeed * Time.deltaTime);
+            // Son de pas avec cooldown
+            footstepTimer -= Time.deltaTime;
+            if (footstepTimer <= 0f)
+            {
+                AudioManager.Instance?.PlayFootstepSound();
+                footstepTimer = footstepInterval;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
+
+        animator.SetFloat(_speedParam, characterController.velocity.magnitude);
     }
 
     /// <summary>Applique la gravité pour que le joueur reste au sol.</summary>
@@ -64,7 +94,7 @@ public class MiniGamePlayerController : MonoBehaviour
     {
         if (characterController.isGrounded)
         {
-            verticalVelocity = -1f; // Petite valeur pour rester collé au sol
+            verticalVelocity = -1f;
         }
         else
         {
@@ -72,5 +102,11 @@ public class MiniGamePlayerController : MonoBehaviour
         }
 
         characterController.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
+    }
+
+    /// <summary>Déclenche l'animation Victory.</summary>
+    public void TriggerVictory()
+    {
+        animator.SetTrigger(_victoryParam);
     }
 }

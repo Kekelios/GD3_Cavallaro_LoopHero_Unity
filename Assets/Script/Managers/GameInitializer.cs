@@ -6,6 +6,8 @@ public class GameInitializer : MonoBehaviour
     [SerializeField] private PlayerData playerData;
     [SerializeField] private QuestCondition[] questConditions;
 
+    private const int DefaultHealth = 100;
+
     private void Awake()
     {
         if (playerData == null) return;
@@ -13,19 +15,14 @@ public class GameInitializer : MonoBehaviour
         if (playerData.isReturningFromMiniGame)
         {
             playerData.isReturningFromMiniGame = false;
-
-            Debug.Log($"Retour du mini-jeu. Clés : {playerData.keyCount}/2, Vie à restaurer : {playerData.savedHealth}");
+            Debug.Log($"Retour du mini-jeu. Clés : {playerData.keyCount}/2, Vie : {playerData.savedHealth}");
         }
         else
         {
+            // Nouvelle partie ou Game Over → reset complet
             playerData._cellNumber = 0;
             playerData.keyCount = 0;
-
-            // ⚠️ IMPORTANT : on met la vie par défaut
-            if (playerData.savedHealth <= 0)
-            {
-                playerData.savedHealth = 100;
-            }
+            playerData.savedHealth = DefaultHealth; // ← toujours 100, sans condition
 
             foreach (var quest in questConditions)
             {
@@ -42,6 +39,7 @@ public class GameInitializer : MonoBehaviour
         RestoreHealth();
     }
 
+    /// <summary>Applique le savedHealth du ScriptableObject sur le HealthSystem de la scène.</summary>
     private void RestoreHealth()
     {
         if (playerData == null) return;

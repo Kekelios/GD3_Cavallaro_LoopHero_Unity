@@ -16,5 +16,7 @@ MonoBehaviour:
   - characterName: Alyrish
     text: "Pas mal jeune h\xE9ros ! "
   - characterName: Alyrish
-    text: Tiens, voici une clef, elle permettra d'ouvrir le portail vers ta prochaine
-      destination.
+    text: "Tiens, voici un pass, il permettra aux gardes de voir que tu prouv\xE9
+      ta valeur."
+  hasChoices: 0
+  runtimeChoices: []
