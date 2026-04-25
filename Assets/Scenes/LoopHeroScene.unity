@@ -515,7 +515,7 @@ PrefabInstance:
     - target: {fileID: 6060825076959092928, guid: fbddf2ae988855541abbb45f76929fdc, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 35103d5c17b981b488be7ef0e2a5e204, type: 2}
+      objectReference: {fileID: -876546973899608171, guid: 343fe279f0a91c84c9546a40fa7e5492, type: 3}
     - target: {fileID: 6618729178232160858, guid: fbddf2ae988855541abbb45f76929fdc, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.1
@@ -562,18 +562,41 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8691512453110186098, guid: fbddf2ae988855541abbb45f76929fdc, type: 3}
       propertyPath: m_Name
-      value: Cell (9)
+      value: CoinMiniGame
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6117848067103990381, guid: fbddf2ae988855541abbb45f76929fdc, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8691512453110186098, guid: fbddf2ae988855541abbb45f76929fdc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 250740298}
   m_SourcePrefab: {fileID: 100100000, guid: fbddf2ae988855541abbb45f76929fdc, type: 3}
 --- !u!4 &250740296 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6618729178232160858, guid: fbddf2ae988855541abbb45f76929fdc, type: 3}
   m_PrefabInstance: {fileID: 250740295}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &250740297 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8691512453110186098, guid: fbddf2ae988855541abbb45f76929fdc, type: 3}
+  m_PrefabInstance: {fileID: 250740295}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &250740298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250740297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b95923e79ad24ad41b6f23612ba4fe4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoinMiniGameCell
+  playerData: {fileID: 11400000, guid: a30b9fe95473ee541b2cd5977fcfa090, type: 2}
+  healthSystem: {fileID: 985458744}
 --- !u!1 &266508978
 GameObject:
   m_ObjectHideFlags: 0
@@ -1644,7 +1667,7 @@ MonoBehaviour:
   - {fileID: 1754928745}
   - {fileID: 6618729177340912746}
   - {fileID: 2119461537}
-  - {fileID: 764172374}
+  - {fileID: 250740298}
   - {fileID: 214181703882592739}
   - {fileID: 550529980}
   - {fileID: 1406518905}
@@ -2331,17 +2354,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 737008230}
   m_CullTransparentMesh: 1
---- !u!114 &764172374 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6117848067103990381, guid: fbddf2ae988855541abbb45f76929fdc, type: 3}
-  m_PrefabInstance: {fileID: 250740295}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2394d8840d58610488b042b7c40a5078, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Cell
 --- !u!1 &769718419
 GameObject:
   m_ObjectHideFlags: 0

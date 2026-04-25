@@ -2,17 +2,22 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// DÈplace le joueur en vue Third Person dans le mini-jeu.
-/// NÈcessite : CharacterController, et le tag "Player" sur le GameObject.
+/// D√©place le joueur en vue Third Person dans le mini-jeu.
+/// N√©cessite : CharacterController, et le tag "Player" sur le GameObject.
 /// </summary>
 [RequireComponent(typeof(CharacterController))]
 public class MiniGamePlayerController : MonoBehaviour
 {
-    [Header("DÈplacement")]
+    [Header("D√©placement")]
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float gravity = -9.81f;
 
-    [Header("CamÈra")]
+    [Header("Saut")]
+    [Tooltip("Active le saut pour ce mini-jeu. D√©sactiv√© dans MiniGameSceneName.")]
+    [SerializeField] private bool jumpEnabled = false;
+    [SerializeField] private float jumpHeight = 2f;
+
+    [Header("Cam√©ra")]
     [SerializeField] private Transform cameraTransform;
 
     [Header("Visuel")]
@@ -26,6 +31,7 @@ public class MiniGamePlayerController : MonoBehaviour
     private Vector2 moveInput;
     private float verticalVelocity;
     private float footstepTimer = 0f;
+    private bool jumpRequested = false;
 
     private int _speedParam;
     private int _victoryParam;
@@ -39,10 +45,17 @@ public class MiniGamePlayerController : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
     }
 
-    /// <summary>AppelÈ automatiquement par le New Input System (action "Move").</summary>
+    /// <summary>Appel√© automatiquement par le New Input System (action "Move").</summary>
     public void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
+    }
+
+    /// <summary>Appel√© automatiquement par le New Input System (action "Jump").</summary>
+    public void OnJump(InputValue value)
+    {
+        if (jumpEnabled && value.isPressed && characterController.isGrounded)
+            jumpRequested = true;
     }
 
     private void Update()
@@ -51,7 +64,7 @@ public class MiniGamePlayerController : MonoBehaviour
         ApplyGravity();
     }
 
-    /// <summary>Calcule et applique le dÈplacement relatif ‡ la camÈra.</summary>
+    /// <summary>Calcule et applique le d√©placement relatif √† la cam√©ra.</summary>
     private void Move()
     {
         if (moveInput.sqrMagnitude >= 0.01f)
@@ -89,22 +102,30 @@ public class MiniGamePlayerController : MonoBehaviour
         animator.SetFloat(_speedParam, characterController.velocity.magnitude);
     }
 
-    /// <summary>Applique la gravitÈ pour que le joueur reste au sol.</summary>
+    /// <summary>Applique la gravit√© et le saut.</summary>
     private void ApplyGravity()
     {
         if (characterController.isGrounded)
         {
             verticalVelocity = -1f;
+
+            if (jumpRequested)
+            {
+                // v = sqrt(2 * |gravity| * jumpHeight)
+                verticalVelocity = Mathf.Sqrt(2f * Mathf.Abs(gravity) * jumpHeight);
+                jumpRequested = false;
+            }
         }
         else
         {
             verticalVelocity += gravity * Time.deltaTime;
+            jumpRequested = false;
         }
 
         characterController.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
     }
 
-    /// <summary>DÈclenche l'animation Victory.</summary>
+    /// <summary>DÔøΩclenche l'animation Victory.</summary>
     public void TriggerVictory()
     {
         animator.SetTrigger(_victoryParam);

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
 {
@@ -15,7 +15,12 @@ public class GameInitializer : MonoBehaviour
         if (playerData.isReturningFromMiniGame)
         {
             playerData.isReturningFromMiniGame = false;
-            Debug.Log($"Retour du mini-jeu. Clés : {playerData.keyCount}/2, Vie : {playerData.savedHealth}");
+            Debug.Log($"Retour du mini-jeu. Clés : {playerData.keyCount}/3, Vie : {playerData.savedHealth}");
+        }
+        else if (playerData.isReturningFromCoinMiniGame)
+        {
+            playerData.isReturningFromCoinMiniGame = false;
+            Debug.Log($"Retour du mini-jeu pièces. Clés : {playerData.keyCount}/3, Vie : {playerData.savedHealth}");
         }
         else
         {
@@ -23,6 +28,8 @@ public class GameInitializer : MonoBehaviour
             playerData._cellNumber = 0;
             playerData.keyCount = 0;
             playerData.savedHealth = DefaultHealth; // ← toujours 100, sans condition
+            playerData.isCoinMiniGameCompleted = false;
+            playerData.isReturningFromCoinMiniGame = false;
 
             foreach (var quest in questConditions)
             {

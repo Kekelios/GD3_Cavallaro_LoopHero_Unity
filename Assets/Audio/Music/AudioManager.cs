@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip menuMusic;
     [SerializeField] private AudioClip gameMusic;
     [SerializeField] private AudioClip miniGameMusic;
+    [SerializeField] private AudioClip coinMiniGameMusic;
     [SerializeField] private AudioClip victoryMusic;
     [SerializeField] private float musicVolume = 0.5f;
 
@@ -22,6 +23,10 @@ public class AudioManager : MonoBehaviour
     [Header("Sound Effects – Mini-Game")]
     [SerializeField] private AudioClip chestOpenSound;
     [SerializeField] private AudioClip victorySFX;
+
+    [Header("Sound Effects – Coin Mini-Game")]
+    [SerializeField] private AudioClip coinPickupSound;
+    [SerializeField] private AudioClip deathZoneSound;
 
     [SerializeField] private float sfxVolume = 0.7f;
 
@@ -62,6 +67,9 @@ public class AudioManager : MonoBehaviour
 
     /// <summary>Musique exclusive au mini-jeu.</summary>
     public void PlayMiniGameMusic() => PlayMusic(miniGameMusic);
+
+    /// <summary>Musique exclusive au mini-jeu pièces.</summary>
+    public void PlayCoinMiniGameMusic() => PlayMusic(coinMiniGameMusic);
 
     public void PlayMenuMusic() => PlayMusic(menuMusic);
 
@@ -104,6 +112,14 @@ public class AudioManager : MonoBehaviour
 
     /// <summary>Fanfare de victoire quand le coffre est récupéré.</summary>
     public void PlayVictorySFX() => PlaySFX(victorySFX);
+
+    // ── SFX – Coin Mini-Game ──────────────────────────────────────────
+
+    /// <summary>Son joué quand le joueur ramasse une pièce.</summary>
+    public void PlayCoinPickupSound() => PlaySFX(coinPickupSound);
+
+    /// <summary>Son joué quand le joueur touche une DeathZone.</summary>
+    public void PlayDeathZoneSound() => PlaySFX(deathZoneSound);
 
     // ── Generic ───────────────────────────────────────────────────────
 

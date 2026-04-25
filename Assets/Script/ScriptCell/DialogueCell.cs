@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class DialogueCell : Cell
 {
@@ -14,6 +14,8 @@ public class DialogueCell : Cell
 
     [Header("Keys")]
     [SerializeField] private PlayerData playerData;
+
+    private const int RequiredKeys = 3;
 
     [Header("Visual Indicators")]
     [SerializeField] private GameObject questMarker;
@@ -64,9 +66,9 @@ public class DialogueCell : Cell
 
     public override void Activate(Pawn CurrentPawn)
     {
-        // La victoire nécessite la quête complétée ET les 2 clés
+        // La victoire nécessite la quête complétée ET les 3 clés
         bool allConditionsMet = (questCondition != null && questCondition.isCompleted)
-                                && (playerData != null && playerData.keyCount >= 2);
+                                && (playerData != null && playerData.keyCount >= RequiredKeys);
 
         if (allConditionsMet)
         {
@@ -97,7 +99,7 @@ public class DialogueCell : Cell
         // Déclenche la victoire uniquement si toutes les conditions sont remplies
         bool allConditionsMet = triggersVictory
                                 && (questCondition != null && questCondition.isCompleted)
-                                && (playerData != null && playerData.keyCount >= 2);
+                                && (playerData != null && playerData.keyCount >= RequiredKeys);
 
         if (allConditionsMet)
         {
@@ -108,11 +110,11 @@ public class DialogueCell : Cell
 
     /// <summary>
     /// Retourne le dialogue selon l'état des clés.
-    /// Le dialogue final nécessite les 2 clés (TreasureCell + MiniGameCell).
+    /// Le dialogue final nécessite les 3 clés (TreasureCell + MiniGameCell + CoinMiniGameCell).
     /// </summary>
     private DialogueData GetDialogueToPlay()
     {
-        if (playerData != null && playerData.keyCount >= 2)
+        if (playerData != null && playerData.keyCount >= RequiredKeys)
             return afterQuestDialogue;
 
         if (hasBeenVisited)

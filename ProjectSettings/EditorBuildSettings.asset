@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MiniGameSceneName.unity
     guid: 971cd3383890e134e975ef57fb31b770
+  - enabled: 1
+    path: Assets/Scenes/CoinMiniGameScene.unity
+    guid: 6e57eeca241c240478ed7871ec8a2756
   - enabled: 0
     path: Assets/Scenes/NatureMorteScene.unity
     guid: 99c9720ab356a0642a771bea13969a05

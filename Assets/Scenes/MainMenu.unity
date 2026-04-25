@@ -1277,6 +1277,7 @@ MonoBehaviour:
   menuMusic: {fileID: 8300000, guid: 8027c70939fe4824d93ac01770fac60d, type: 3}
   gameMusic: {fileID: 8300000, guid: 8027c70939fe4824d93ac01770fac60d, type: 3}
   miniGameMusic: {fileID: 8300000, guid: d5714006ee7dac946b751d379385229e, type: 3}
+  coinMiniGameMusic: {fileID: 8300000, guid: 5666f01431a14bf429865d4d07879781, type: 3}
   victoryMusic: {fileID: 8300000, guid: ed92896a01a171b45b5b1d311eff37a3, type: 3}
   musicVolume: 0.4
   diceRollSound: {fileID: 8300000, guid: efedb0efee0206a438309cd7bcad3955, type: 3}
@@ -1286,6 +1287,8 @@ MonoBehaviour:
   footstepSoundB: {fileID: 8300000, guid: ae12dd51b2fc9b1499cad66a1619ef9a, type: 3}
   chestOpenSound: {fileID: 8300000, guid: 36326462bf0d3c84187ba7031be9e041, type: 3}
   victorySFX: {fileID: 8300000, guid: fdaa9da78c52e02498d12cefba2f466c, type: 3}
+  coinPickupSound: {fileID: 8300000, guid: 0806d10a5044bea4e988017064eab1f2, type: 3}
+  deathZoneSound: {fileID: 8300000, guid: da45f7c29ab00574bb15991c0d19bd30, type: 3}
   sfxVolume: 0.7
 --- !u!4 &1793584166
 Transform:
