@@ -37,6 +37,8 @@ Case trésor TreasureCell	Coffre lié à la quête ; choix : ouverture délicate
 
 Case mini-jeu MiniGameCell	Sauvegarde la santé et charge le mini-jeu si la deuxième clé n'a pas été obtenue
 
+Case mini-jeu ParkourCell  Sauvegarde la santé et charge le mini-jeu si la troisième clé n'a pas été obtenue
+
 Système de quête
 - QuestCondition est un ScriptableObject avec trois états : inactif, actif, complété.
 - La quête s'active au premier passage sur la DialogueCell.
@@ -45,6 +47,7 @@ Système de quête
 
 Gameplay — Mini-jeu (MiniGameSceneName)
 Scène d'infiltration en désert avec ennemis de type momie.
+
 
 Contrôleur joueur (MiniGamePlayerController)
 - Déplacement 3D relatif à la caméra via le New Input System.
@@ -66,6 +69,10 @@ Gestion du mini-jeu (MiniGamesManager)
 - Coffre touché → clé incrémentée, ennemis désactivés, animation victoire, retour à LoopHeroScene.
 - Ennemi touche le joueur → −25 sur savedHealth. Si mort : Game Over, retour sans clé.
 - La santé persiste entre scènes via PlayerData (ScriptableObject).
+
+Gestion du mini-jeu (Parkour)
+- Le joueur collecte 20 pièces -> il gagne la clef 
+- Le joueur tombe, il perds 25 PV
 
 Systèmes transversaux
 Santé (HealthSystem)
@@ -100,7 +107,7 @@ Game Over (GameOverManager)
 - Affiche le panneau, gèle le temps (Time.timeScale = 0), propose relancer ou menu.
 
 Victoire (VictoryManager)
-- Déclenché par DialogueCell quand les 2 clés sont obtenues et la quête complétée.
+- Déclenché par DialogueCell quand les 3 clés sont obtenues et la quête complétée.
 - Lance la musique de victoire, masque le bouton dé, affiche le panneau après délai.
 
 Interface utilisateur (HUD)
